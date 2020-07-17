@@ -12,6 +12,12 @@
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" }
       ]
+    },
+    {
+      "source": "/fonts/(.+)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=7884000, immutable" }
+      ]
     }
   ]
 }
