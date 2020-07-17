@@ -1,0 +1,17 @@
+{
+  "public": true,
+  "rewrites": [
+  	{
+  		"source": "/log/:name*",
+  		"destination": "https://d25gljbdtt9pni.cloudfront.net/log/:name*"
+  	}
+  ],
+  "headers": [
+    {
+      "source": "/(.+)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}
