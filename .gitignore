@@ -1,1 +1,4 @@
 .vercel
+
+# MacOS
+.DS_Store
