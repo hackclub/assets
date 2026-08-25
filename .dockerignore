@@ -1,0 +1,6 @@
+.git
+.gitignore
+.vercel
+.DS_Store
+**/.DS_Store
+README.md
