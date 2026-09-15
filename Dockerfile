@@ -1,4 +1,4 @@
-FROM dhi.io/nginx:alpine
+FROM dhi.io/nginx:1-alpine
 
 USER 0
 
