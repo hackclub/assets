@@ -15,9 +15,9 @@ RUN rm -f /usr/share/nginx/html/Dockerfile \
 
 USER nginx
 
-EXPOSE 8080
+EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD wget -q -O /dev/null http://localhost:8080/icon-rounded.svg || exit 1
+    CMD wget -q -O /dev/null http://localhost/icon-rounded.svg || exit 1
 
 CMD ["-g", "daemon off;"]
