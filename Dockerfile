@@ -8,6 +8,7 @@ WORKDIR /content
 COPY . .
 
 RUN set -eu; \
+    if [ -f .git/shallow ]; then git fetch --quiet --unshallow origin; fi; \
     : > /tmp/git-mtimes; \
     git ls-files -z | while IFS= read -r -d '' path; do \
         [ -e "$path" ] || continue; \
