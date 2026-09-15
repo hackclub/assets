@@ -24,6 +24,7 @@ FROM dhi.io/nginx:1-alpine
 USER 0
 
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN rm -rf /usr/share/nginx/html && mkdir -p /usr/share/nginx/html
 COPY --from=content /content/ /usr/share/nginx/html/
 
 USER nginx
