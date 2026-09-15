@@ -1,17 +1,30 @@
+FROM dhi.io/nginx:1-alpine-dev AS content
+
+USER 0
+
+RUN apk add --no-cache git
+
+WORKDIR /content
+COPY . .
+
+RUN set -eu; \
+    git ls-files -z | while IFS= read -r -d '' path; do \
+        [ -e "$path" ] || continue; \
+        timestamp="$(git log -1 --format=%ct -- "$path")"; \
+        [ -z "$timestamp" ] || touch -d "@$timestamp" "$path"; \
+    done; \
+    find . -type d ! -path './.git*' -print0 | while IFS= read -r -d '' path; do \
+        timestamp="$(git log -1 --format=%ct -- "$path")"; \
+        [ -z "$timestamp" ] || touch -d "@$timestamp" "$path"; \
+    done; \
+    rm -rf .git Dockerfile .dockerignore nginx.conf vercel.json index.html 50x.html
+
 FROM dhi.io/nginx:1-alpine
 
 USER 0
 
 COPY nginx.conf /etc/nginx/nginx.conf
-
-COPY . /usr/share/nginx/html
-
-RUN rm -f /usr/share/nginx/html/Dockerfile \
-          /usr/share/nginx/html/.dockerignore \
-          /usr/share/nginx/html/nginx.conf \
-          /usr/share/nginx/html/vercel.json \
-          /usr/share/nginx/html/index.html \
-          /usr/share/nginx/html/50x.html
+COPY --from=content /content/ /usr/share/nginx/html/
 
 USER nginx
 
