@@ -1,4 +1,6 @@
-FROM nginx:alpine
+FROM dhi.io/nginx:alpine
+
+USER 0
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
@@ -11,9 +13,11 @@ RUN rm -f /usr/share/nginx/html/Dockerfile \
           /usr/share/nginx/html/index.html \
           /usr/share/nginx/html/50x.html
 
-EXPOSE 80
+USER nginx
+
+EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD wget -q -O /dev/null http://localhost/icon-rounded.svg || exit 1
+    CMD wget -q -O /dev/null http://localhost:8080/icon-rounded.svg || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["-g", "daemon off;"]
